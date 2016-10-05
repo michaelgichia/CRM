@@ -1,0 +1,4 @@
+1. Create crmapp
+2. Configure database to postgresql_psycopg2
+3. Create superuser
+4. Install dj-static
