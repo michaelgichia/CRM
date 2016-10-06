@@ -2,3 +2,5 @@
 2. Configure database to postgresql_psycopg2
 3. Create superuser
 4. Install dj-static
+5. Create a marketing app and added it to installed apps.
+6. Created templates folder and configured template setting and TEMPLATE_CONTEXT_PROCESSORS.
