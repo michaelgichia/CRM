@@ -13,6 +13,8 @@ import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
+
+ENV_ROLE = get_env_variable('ENV_ROLE')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
