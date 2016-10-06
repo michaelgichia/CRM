@@ -10,11 +10,22 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from django.core.exceptions import ImproperlyConfigured
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
+# Handling Key Import Errors
+def get_env_variable(var_name):
+    """ Get the environment variable or return exception """
+    try:
+        return os.environ[var_name]
+    except KeyError:
+        error_msg = "Set the %s environment variable" % var_name
+        raise ImproperlyConfigured(error_msg)
 
 
-ENV_ROLE = get_env_variable('ENV_ROLE')
+
+# ENV_ROLE = get_env_variable('ENV_ROLE')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
@@ -66,7 +77,7 @@ DATABASES = {
         'NAME': 'crmeasyDB',
         'USER': 'admin',
         'PASSWORD': 'hehehe',
-        'HOST': '/tmp',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
@@ -113,6 +124,3 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
 )
 # Parse database configuration from $DATABASE_URL
-if ENV_ROLE == 'production':
-    import dj_database_url
-    DATABASES['default'] =  dj_database_url.config()
