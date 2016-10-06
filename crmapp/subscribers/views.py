@@ -2,10 +2,10 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 
-from subscribers.forms import SeachForm, SeachForm
+from subscribers.forms import SeachForm, SubscriberForm
 
 # Create your views here.
-def subscriber_new(request, template='subscriber/subscriber_new.html'):
+def subscriber_new(request, template='subscribers/subscriber_new.html'):
 	if request.method == 'POST':
 		form = SubscriberForm(request.POST)
 		if form.is_valid():

@@ -51,7 +51,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     # My apps
     'crmapp.marketing',
-    'crmapp.subscriber',
+    'crmapp.subscribers',
 )
 
 MIDDLEWARE_CLASSES = (
