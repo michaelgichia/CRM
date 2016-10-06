@@ -64,7 +64,7 @@ DATABASES = {
         'NAME': 'crmeasyDB',
         'USER': 'admin',
         'PASSWORD': 'hehehe',
-        'HOST': '127.0.0.1',
+        'HOST': '/tmp',
         'PORT': '5432',
     }
 }
