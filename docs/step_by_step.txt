@@ -4,3 +4,7 @@
 4. Install dj-static
 5. Create a marketing app and added it to installed apps.
 6. Created templates folder and configured template setting and TEMPLATE_CONTEXT_PROCESSORS.
+7. Base html
+8. Create homepage
+9. Configure Heroku 
+https://mighty-hamlet-28877.herokuapp.com/
