@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 
-from subscribers.forms import SeachForm, SubscriberForm
+from .forms import SubscriberForm
 
 # Create your views here.
 def subscriber_new(request, template='subscribers/subscriber_new.html'):
