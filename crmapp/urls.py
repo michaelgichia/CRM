@@ -3,6 +3,7 @@ from django.contrib import admin
 
 from marketing.views import Homepage
 
+admin.autodiscover()
 
 urlpatterns = patterns('',
 
