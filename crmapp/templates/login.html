@@ -4,10 +4,10 @@
 {% block content %}
     <div id="content-container" class="container p-none">
         <div class="lgn-container col-lg-8">
-            <form id="login-form" method="post" 
-                  action="{% url 'django.contrib.auth.views.login' %}">
+            <form id="login-form" method="post" action="{% url 'django.contrib.auth.views.login' %}" >
                 {% csrf_token %}
                 <table class="table">
+                    <h3>Login</h3>
                     <tr>
                         <td><label for="id_username">Username</label></td>
                         <td><input id="id_username" name="username" 
