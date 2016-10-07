@@ -33,7 +33,7 @@ def subscriber_new(request, template='subscribers/subscriber_new.html'):
 			city = form.cleaned_data['city']
 			state = form.cleaned_data['state']
 			sub = Subscriber(address_one=address_one, address_two=address_two,
-								city=city, state=state)
+								city=city, state=state, user_rec=user)
 			sub.save()
 			# Process payment (via Stripe)
 			fee = settings.SUBSCRIPTION_PRICE

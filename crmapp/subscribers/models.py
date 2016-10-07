@@ -1,9 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from django.conf import settings
+
+import stripe
+
 # Create your models here.
 class Subscriber(models.Model):
-	user_rec = models.ForeignKey(User)
+	user_rec = models.ForeignKey(User, null=False)
 	address_one = models.CharField(max_length=100)
 	address_two = models.CharField(max_length=100, blank=True)
 	city = models.CharField(max_length=50)
@@ -17,8 +21,7 @@ class Subscriber(models.Model):
 		return u"%s's Subscription Info" % self.user_rec
 
 	def charge(self, request, email, fee):
-		# Set your secret key: remember to change this to your live secret key
-		# in production. See your keys here https://manage.stripe.com/account
+
 		stripe.api_key = settings.STRIPE_SECRET_KEY
 
 		# Get the credit card details submitted by the form
