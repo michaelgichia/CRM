@@ -13,9 +13,20 @@ class AccountList(ListView):
 	template_name = 'accounts/account_list.html'
 	context_object_name = 'account'
 
-	def query_set(self):
-		account_list = Account.objects.filter(owner=self.request.user)
-		return account_list
+    def get_queryset(self):
+        try:
+            a = self.request.GET.get('account',)
+        except KeyError:
+            a = None
+        if a:
+            account_list = Account.objects.filter(
+                name__icontains=a,
+                owner=self.request.user
+            )
+        else:
+            account_list = Account.objects.filter(owner=self.request.user)
+        return account_list
+
 
 	@method_decorator(login_required)
 	def dispatch(self, *agrs, **kwargs):
