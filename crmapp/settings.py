@@ -125,3 +125,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
 )
 # Parse database configuration from $DATABASE_URL
+# Stripe settings.
+STRIPE_SECRET_KEY = get_env_variable('STRIPE_SECRET_KEY')
+STRIPE_PUBLISHABLE_KEY = get_env_variable('STRIPE_PUBLISHABLE_KEY')
+
+# Current Subscription Price
+SUBSCRIPTION_PRICE = 1500
