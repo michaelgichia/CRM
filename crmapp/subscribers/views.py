@@ -1,9 +1,14 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
+from django.contrib.auth import authenticate, login
+from django.conf import settings
+from django.core.urlresolvers import reverse
 
 from .forms import SubscriberForm
 from .models import Subscriber
+
+import stripe
 
 # Create your views here.
 def subscriber_new(request, template='subscribers/subscriber_new.html'):
@@ -30,11 +35,37 @@ def subscriber_new(request, template='subscribers/subscriber_new.html'):
 			sub = Subscriber(address_one=address_one, address_two=address_two,
 								city=city, state=state)
 			sub.save()
+			# Process payment (via Stripe)
+			fee = settings.SUBSCRIPTION_PRICE
+			try:
+				stripe_customer = sub.charge(request, email, fee)
+			except stripe.StripeError as e:
+				form._errors[NON_FIELD_ERRORS] = form.error_class([e.args[0]])
+				return render(request, template,
+					{'form':form,
+					'STRIPE_PUBLISHABLE_KEY':settings.STRIPE_PUBLISHABLE_KEY}
+					)
+
+			# Auto login the user
+			a_u = authenticate(username=username, password=password)
+			if a_u is not None:
+				if a_u.is_active:
+					login(request, a_u)
+					return HttpResponseRedirect(reverse('account_list'))
+
+				else:
+					return HttpResponseRedirect(reverse('django.contrib.auth.views.login'))
+
+			else:
+				return HttpResponseRedirect(reverse('sub_new'))
+
 			return HttpResponseRedirect('/success/')
 	else:
 		form = SubscriberForm()
-		return render(request, template, {'form': form})
-
+		
+	return render(request, template,
+		{'form':form, 
+		'STRIPE_PUBLISHABLE_KEY':settings.STRIPE_PUBLISHABLE_KEY})
 
 # def search(request):
 # 	if request.methods == 'POST':
