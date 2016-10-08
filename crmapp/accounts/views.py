@@ -6,7 +6,7 @@ from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
 from .models import Account
-
+from .forms import AccountForm
 
 # Create your views here.
 class AccountList(ListView):
@@ -54,11 +54,11 @@ def account_cru(request):
 			account = form.save(commit=False)
 			account.owner = request.user
 			account.save()
-			redirect_url = reverse('crmapp.accounts.views.account_detail', args=(request.uuid))
+			redirect_url = reverse('crmapp.accounts.views.account_detail', args=(account.uuid,))
 			return HttpResponseRedirect(redirect_url)
 	else:
 		form = AccountForm()
-		
+
 	variables = {'form': form}
 	template = ('accounts/account_cru.html')
 	return render(request, template, variables)

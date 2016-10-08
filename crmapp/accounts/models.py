@@ -6,7 +6,7 @@ from shortuuidfield import ShortUUIDField
 # Create your models here.
 class Account(models.Model):
 	uuid = ShortUUIDField(unique=True)
-	name = models.CharField(max_length=100)
+	name = models.CharField(max_length=100, unique=True)
 	desc = models.TextField(blank=True)
 	address_one = models.CharField(max_length=50)
 	address_two = models.CharField(max_length=50, blank=True)
