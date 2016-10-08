@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -47,11 +47,12 @@ def account_detail(request, uuid):
 	return render(request, 'accounts/account_detail.html', variables)
 
 @login_required()
-def account_cru(request):
-if uuid:
-	account = get_object_or_404(Account, uuid=uuid)
-	if account.owner != request.user:
-		return HttpResponseForbidden()
+def account_cru(request, uuid=None):
+
+	if uuid:
+		account = get_object_or_404(Account, uuid=uuid)
+		if account.owner != request.user:
+			return HttpResponseForbidden()
 	else:
 		account = Account(owner=request.user)
 
@@ -68,11 +69,11 @@ if uuid:
 
 	variables = {
 			'form': form,
-			'account': account,}
+			'account': account}
 
 	if request.is_ajax():
 		template = 'accounts/account_item_form.html'
-		
+
 	else:
 		template = 'accounts/account_cru.html'
 
