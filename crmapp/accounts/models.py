@@ -20,7 +20,7 @@ class Account(models.Model):
 		verbose_name_plural = 'accounts'
 
 	def __unicode__(self):
-		return "%s" % self.name
+		return u"%s" % self.name
 
 	@models.permalink
 	def get_absolute_url(self):
