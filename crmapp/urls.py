@@ -12,6 +12,7 @@ urlpatterns = patterns('',
 	# Market pages url.
 	
 	url(r'^$', Homepage.as_view(), name='home'),
+    url(r'^acount/new/$', 'crmapp.accounts.views.account_cru', name='account_new'),
 	url(r'^signup/$', 'crmapp.subscribers.views.subscriber_new', name='sub_new'),
     # Examples:
     # url(r'^$', 'crmapp.views.home', name='home'),
