@@ -68,7 +68,12 @@ if uuid:
 
 	variables = {
 			'form': form,
-			'account': account,
-			}
-	template = ('accounts/account_cru.html')
+			'account': account,}
+
+	if request.is_ajax():
+		template = 'accounts/account_item_form.html'
+		
+	else:
+		template = 'accounts/account_cru.html'
+
 	return render(request, template, variables)
