@@ -35,21 +35,21 @@ class AccountList(ListView):
 	def dispatch(self, *agrs, **kwargs):
 		return super(AccountList, self).dispatch(*agrs, **kwargs)
 
-@login_required()	
+@login_required()
 def account_detail(request, uuid):
 
-	account = Account.objects.get(uuid=uuid)
-	if account.owner != request.user:
-		return HttpResponseForbidden()
+    account = Account.objects.get(uuid=uuid)
+    if account.owner != request.user:
+            return HttpResponseForbidden()
 
-	contacts = Contact.objects.filter(account=account)
+    contacts = Contact.objects.filter(account=account)
 
-	variables = {
-		'account': account,
-		'contacts': contacts
-	}
+    variables = {
+        'account': account,
+        'contacts': contacts,
+    }
 
-	return render(request, 'accounts/account_detail.html', variables)
+    return render(request, 'accounts/account_detail.html', variables)
 
 @login_required()
 def account_cru(request, uuid=None):
