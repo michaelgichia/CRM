@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
 from accounts.urls import account_urls
-from contact.urls import contact_urls
+from contacts.urls import contact_urls
 
 from marketing.views import Homepage
 from accounts.views import AccountList
