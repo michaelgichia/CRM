@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 
 from .models import Account
 from .forms import AccountForm
+from crmapp.contacts.models import Contact
 
 # Create your views here.
 class AccountList(ListView):
@@ -38,14 +39,15 @@ class AccountList(ListView):
 def account_detail(request, uuid):
 
 	account = Account.objects.get(uuid=uuid)
-
 	if account.owner != request.user:
 		return HttpResponseForbidden()
 
-	contacts = Contacts.objects.filter(account=account)
+	contacts = Contact.objects.filter(account=account)
 
-	variables = {'account': account,
-					'contacts': contacts}
+	variables = {
+		'account': account,
+		'contacts': contacts
+	}
 
 	return render(request, 'accounts/account_detail.html', variables)
 
@@ -71,8 +73,9 @@ def account_cru(request, uuid=None):
 		form = AccountForm(instance=account)
 
 	variables = {
-			'form': form,
-			'account': account}
+		'form': form,
+		'account': account
+	}
 
 	if request.is_ajax():
 		template = 'accounts/account_item_form.html'

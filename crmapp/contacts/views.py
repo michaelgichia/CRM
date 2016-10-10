@@ -6,6 +6,7 @@ from .models import Contact
 # Create your views here.
 @login_required()
 def contact_detail(request, uuid):
+	
 	contact = Contact.objects.get(uuid=uuid)
 
 	return render(request, 'contacts/contact_detail.html', {'contact': contact})
