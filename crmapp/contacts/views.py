@@ -15,6 +15,7 @@ def contact_detail(request, uuid):
 
 @login_required()
 def contact_cru(request):
+
 	if request.method == 'POST':
 		form = ContactForm(request.POST)
 		if form.is_valid():
@@ -26,9 +27,7 @@ def contact_cru(request):
 			contact.owner = request.user
 			contact.save()
 
-			reverse_url = reverse('crmapp.accounts.views.account_detail',
-									agrs=(account.uuid)
-									)
+			reverse_url = reverse('crmapp.accounts.views.account_detail', agrs=(account.uuid))
 			return HttpResponseRedirect(reverse_url)
 
 	else:
