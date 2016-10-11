@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 
-from .models.communications import Communication
+from .models import Communication
 
 # Create your views here.
 @login_required()
