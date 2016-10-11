@@ -29,6 +29,7 @@ urlpatterns = patterns('',
     url(r'^account/list/$', AccountList.as_view(), name='account_list'),
     url(r'^account/(?P<uuid>[\w-]+)/', include(account_urls)),
     url(r'^contact/(?P<uuid>[\w-]+)/', include(contact_urls)),
+    url(r'^contact/new/$', 'crmapp.contacts.views.contact_cru', name='contact_new')
 
 
 )
