@@ -13,11 +13,10 @@ def contact_detail(request, uuid):
 	
 	contact = Contact.objects.get(uuid=uuid)
 
-<<<<<<< HEAD
 	return render(request, 
 		'contacts/contact_detail.html', 
 		{'contact': contact})
-=======
+
 	return render(request, 'contacts/contact_detail.html', {'contact': contact})
 
 @login_required()
@@ -59,10 +58,4 @@ def contact_cru(request, uuid=None, account=None):
 		}
 
 	template = 'contacts/contact_cru.html'
-<<<<<<< HEAD
 	return render(request, template, variables)
->>>>>>> hedit
-=======
-		
-	return render(request, template, variables)
->>>>>>> medit
