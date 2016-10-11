@@ -1,11 +1,41 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseForbidden, HttpResponseRedirect
+from django.http import HttpResponseForbidden, HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
+from django.utils.decorators import method_decorator
+from django.views.generic.edit import DeleteView
 
 from .models import Contact
 from .forms import ContactForm
 from crmapp.accounts.models import Account 
+
+
+class ContactMixin(object):
+	"""docstring for ContactMixin"""
+	model = Contact
+
+	def get_context_data(self, **kwargs):
+		kwargs.update({'object_name': 'Contact'})
+		return kwargs
+
+	@method_decorator(login_required)
+	def dispatch(self, *agrs, **kwargs):
+		return super(ContactMixin, self).dispatch(*agrs, **kwargs)
+
+class ContactDelete(ContactMixin, DeleteView):
+	template_name = 'object_confirm_delete.html'
+
+	def get_object(self, queryset=None):
+		obj = super(ContactDelete, self).get_object()
+		if not obj.owner == self.request.user:
+			raise Http404
+		account = account.objects.get(id=obj.account.id)
+		self.account = account
+		return obj
+
+	def get_success_url(self):
+		return reverse('crmapp.accounts.views.account_detail',
+						args=(self.account.uuid,))
 
 # Create your views here.
 @login_required()
@@ -63,5 +93,7 @@ def contact_cru(request, uuid=None, account=None):
 		template = 'contacts/contact_item_form.html'
 	else:
 		template = 'contacts/contact_cru.html'
-		
+
 	return render(request, template, variables)
+
+
