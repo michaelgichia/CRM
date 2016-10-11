@@ -40,11 +40,13 @@ def contact_cru(request, uuid=None, account=None):
 			contact.owner = request.user
 			contact.save()
 
-			reverse_url = reverse('crmapp.accounts.views.account_detail', agrs=(account.uuid))
-			return HttpResponseRedirect(reverse_url)
-		else:
-			account = form.cleaned_data['account']
-
+			if request.is_ajax():
+				return render(request,
+								'contacts/contact_item_view.html',
+								{'account': account, 'contact': contact})
+			else:
+				reverse_url = reverse('crmapp.accounts.views.account_detail', agrs=(account.uuid))
+				return HttpResponseRedirect(reverse_url)
 	else:
 		form = ContactForm(instance=contact)
 	
@@ -57,5 +59,9 @@ def contact_cru(request, uuid=None, account=None):
 		'account': account
 		}
 
-	template = 'contacts/contact_cru.html'
+	if request.is_ajax():
+		template = 'contacts/contact_item_form.html'
+	else:
+		template = 'contacts/contact_cru.html'
+		
 	return render(request, template, variables)
